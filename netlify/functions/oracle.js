@@ -1,115 +1,81 @@
-const https = require("https");
+var https = require('https');
 
-const SYSTEM_PROMPT = `Eres Orientum, un asistente que opera bajo una ontología estructural precisa que integra la teoría mimética de René Girard y el sistema de redes tripartitas de Carlos Castrillo. Toda relación significativa es triangular: ORIGEN → MEDIADOR → DESTINO. Sin mediador la relación colapsa en díada y el conflicto se vuelve simétrico. Identificá siempre el mediador. Orientá sin decidir. La pragmática pertenece al consultante.`;
+exports.handler = function(event, context, callback) {
 
-function llamarAnthropic(userMessage, apiKey) {
-  return new Promise((resolve, reject) => {
-    const bodyObj = {
-      model: 'claude-opus-4-5',
-      max_tokens: 1024,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userMessage }]
-    };
-    const body = JSON.stringify(bodyObj);
-    const options = {
-      hostname: "api.anthropic.com",
-      path: "/v1/messages",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "Content-Length": Buffer.byteLength(body)
-      }
-    };
-    const req = https.request(options, (res) => {
-      let data = "";
-      res.on("data", (chunk) => { data += chunk; });
-      res.on("end", () => { resolve(data); });
-    });
-    req.on("error", (err) => { reject(err); });
-    req.write(body);
-    req.end();
-  });
-}
-
-exports.handler = async (event) => {
-  const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Content-Type": "application/json"
+  var headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
   };
 
-  if (event.httpMethod === "OPTIONS") {
-    return { statusCode: 200, headers, body: "" };
-  }
-
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return {
+  function responder(texto) {
+    callback(null, {
       statusCode: 200,
-      headers,
-      body: JSON.stringify({ respuesta: "ERROR: falta la API key en Netlify." })
-    };
-  }
-
-  let mensaje = "";
-  try {
-    const parsed = JSON.parse(event.body || "{}");
-    mensaje = (parsed.mensaje || "").trim();
-  } catch (e) {
-    mensaje = "hola";
-  }
-
-  if (mensaje.length < 1) {
-    mensaje = "hola";
-  }
-
-  try {
-    const raw = await llamarAnthropic(mensaje, apiKey);
-    let parsed;
-    try {
-      parsed = JSON.parse(raw);
-    } catch (e) {
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ respuesta: "ERROR PARSE: " + raw.substring(0, 300) })
-      };
-    }
-
-    if (parsed.error) {
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ respuesta: "ERROR API: " + parsed.error.type + " — " + parsed.error.message })
-      };
-    }
-
-    let texto = '';
-for (let i = 0; i < r.content.length; i++) {
-  if (r.content[i].text) { texto += r.content[i].text; }
-}
-    if (!texto) {
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ respuesta: "ERROR: respuesta vacía. Raw: " + raw.substring(0, 300) })
-      };
-    }
-
-    return {
-      statusCode: 200,
-      headers,
+      headers: headers,
       body: JSON.stringify({ respuesta: texto })
-    };
-
-  } catch (err) {
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ respuesta: "ERROR CATCH: " + err.message })
-    };
+    });
   }
+
+  if (event.httpMethod === 'OPTIONS') {
+    return callback(null, { statusCode: 200, headers: headers, body: '' });
+  }
+
+  var key = process.env.ANTHROPIC_API_KEY;
+  if (!key) { return responder('ERROR: sin API key'); }
+
+  var msg = 'hola';
+  try {
+    var b = JSON.parse(event.body || '{}');
+    if (b && b.mensaje) { msg = b.mensaje; }
+  } catch(e) {}
+
+  var payload = JSON.stringify({
+    model: 'claude-opus-4-5',
+    max_tokens: 1024,
+    system: 'Eres Orientum. Identificas el mediador en toda consulta usando teoria mimetica y redes tripartitas.',
+    messages: [{ role: 'user', content: msg }]
+  });
+
+  var options = {
+    hostname: 'api.anthropic.com',
+    port: 443,
+    path: '/v1/messages',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(payload),
+      'x-api-key': key,
+      'anthropic-version': '2023-06-01'
+    }
+  };
+
+  var req = https.request(options, function(res) {
+    var data = '';
+    res.on('data', function(chunk) { data = data + chunk; });
+    res.on('end', function() {
+      var r;
+      try { r = JSON.parse(data); } catch(e) {
+        return responder('ERROR PARSE: ' + data.substring(0, 300));
+      }
+      if (r.error) {
+        return responder('ERROR API: ' + r.error.type + ' - ' + r.error.message);
+      }
+      if (!r.content || r.content.length === 0) {
+        return responder('ERROR: sin content. Raw: ' + data.substring(0, 300));
+      }
+      var texto = '';
+      for (var i = 0; i < r.content.length; i++) {
+        if (r.content[i] && r.content[i].text) {
+          texto = texto + r.content[i].text;
+        }
+      }
+      if (!texto) {
+        return responder('ERROR: texto vacio. Content: ' + JSON.stringify(r.content));
+      }
+      return responder(texto);
+    });
+  });
+
+  req.on('error', function(e) { responder('ERROR RED: ' + e.message); });
+  req.write(payload);
+  req.end();
 };
