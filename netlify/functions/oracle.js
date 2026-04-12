@@ -5,7 +5,7 @@ const SYSTEM_PROMPT = `Eres Orientum, un asistente que opera bajo una ontología
 function llamarAnthropic(userMessage, apiKey) {
   return new Promise((resolve, reject) => {
     const bodyObj = {
-      model\: 'claude-3-haiku-20240307',
+      model: 'claude-3-haiku-20240307',
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: userMessage }]
