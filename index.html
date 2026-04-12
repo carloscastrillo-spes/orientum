@@ -1,1225 +1,191 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orientum — Donde el sentido se vuelve orientación</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --parch:     #F7F3EB;
-  --parch2:    #EFE8D8;
-  --parch3:    #E3D9C4;
-  --parch4:    #D4C8AD;
-  --ink:       #1C1812;
-  --ink2:      #3A3228;
-  --ink3:      #6B5F4E;
-  --ink4:      #9A8E7A;
-  --gold:      #A67C3E;
-  --gold2:     #C49A52;
-  --gold3:     #E8C97A;
-  --gold-lt:   #F5E4B0;
-  --terra:     #7A3A20;
-  --sky:       #2A4A6B;
-  --sky2:      #3D6B99;
-  --dawn:      #E8784A;
-  --dawn2:     #F5A06A;
-  --serif-disp:'Cinzel', Georgia, serif;
-  --serif:     'Cormorant Garamond', Georgia, serif;
-  --sans:      'Instrument Sans', system-ui, sans-serif;
-}
-
-html { scroll-behavior: smooth; }
-body { background: var(--parch); color: var(--ink); font-family: var(--sans); min-height: 100vh; overflow-x: hidden; }
-
-/* ── HERO ── */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 4rem 2rem 6rem;
-  overflow: hidden;
-}
-
-/* Amanecer — luz que nace desde abajo */
-.hero-dawn {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 100% 50% at 50% 100%, rgba(232,120,74,0.18) 0%, rgba(232,120,74,0.06) 40%, transparent 70%),
-    radial-gradient(ellipse 70% 40% at 50% 85%, rgba(245,160,106,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 120% 60% at 50% 100%, rgba(196,154,82,0.08) 0%, transparent 50%),
-    linear-gradient(180deg, #F7F3EB 0%, #F2EBD8 60%, #EDE0C4 100%);
-  z-index: 0;
-}
-
-/* Rayos de luz — como vitrales */
-.hero-rays {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 70%;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.07;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 700px;
-}
-
-/* Estrella de 8 puntas — Estrella de Belén / Resurrección */
-.star-symbol {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 2rem;
-  display: block;
-  animation: starshine 5s ease-in-out infinite;
-}
-
-@keyframes starshine {
-  0%,100% { opacity: 0.65; transform: scale(1) rotate(0deg); }
-  50% { opacity: 1; transform: scale(1.05) rotate(22.5deg); }
-}
-
-.hero-eyebrow {
-  font-family: var(--sans);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--ink4);
-  margin-bottom: 1.25rem;
-}
-
-.hero-title {
-  font-family: var(--serif-disp);
-  font-size: clamp(3.5rem, 10vw, 7rem);
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  color: var(--ink);
-  line-height: 1;
-  margin-bottom: 0.75rem;
-}
-
-.hero-title span {
-  color: var(--gold);
-}
-
-.hero-tagline {
-  font-family: var(--serif);
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink3);
-  letter-spacing: 0.04em;
-  margin-bottom: 3rem;
-  line-height: 1.6;
-}
-
-/* Piedra de distinción */
-.distinction {
-  border: 1px solid var(--parch4);
-  border-radius: 2px;
-  padding: 1.5rem 2rem;
-  margin: 0 auto 2.5rem;
-  max-width: 540px;
-  background: rgba(255,255,255,0.5);
-  position: relative;
-}
-
-.distinction::before,
-.distinction::after {
-  content: '✦';
-  position: absolute;
-  font-size: 0.5rem;
-  color: var(--gold2);
-}
-.distinction::before { top: 0.6rem; left: 0.8rem; }
-.distinction::after  { bottom: 0.6rem; right: 0.8rem; }
-
-.distinction p {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink2);
-  line-height: 1.85;
-}
-
-.distinction strong {
-  font-style: normal;
-  font-weight: 500;
-  color: var(--ink);
-}
-
-.distinction .no-predict {
-  display: block;
-  margin-top: 1rem;
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-.verbo-quote {
-  font-family: var(--serif);
-  font-size: 0.88rem;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink4);
-  letter-spacing: 0.06em;
-  margin-bottom: 3rem;
-}
-
-.verbo-quote span { color: var(--parch4); margin: 0 0.5rem; }
-
-.pragmatica {
-  font-family: var(--serif-disp);
-  font-size: clamp(0.85rem, 1.8vw, 1rem);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  color: var(--ink2);
-  line-height: 1.7;
-  margin-bottom: 2rem;
-}
-
-.hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 30px;
-  border: 1px solid var(--gold2);
-  border-radius: 1px;
-  background: transparent;
-  color: var(--gold);
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.hero-cta:hover {
-  background: var(--gold);
-  color: var(--parch);
-  border-color: var(--gold);
-}
-
-.scroll-hint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  animation: bob 2.5s ease-in-out infinite;
-  opacity: 0.4;
-}
-
-@keyframes bob {
-  0%,100%{transform:translateX(-50%) translateY(0)}
-  50%{transform:translateX(-50%) translateY(5px)}
-}
-
-.scroll-hint span { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink4); }
-
-/* ── NAV ── */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(247,243,235,0.94);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--parch3);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-}
-
-.nav-logo {
-  font-family: var(--serif-disp);
-  font-size: 0.95rem;
-  font-weight: 400;
-  letter-spacing: 0.22em;
-  color: var(--ink);
-}
-
-.nav-links { display: flex; gap: 2rem; }
-.nav-links a { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink3); text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover { color: var(--gold); }
-
-/* ── SECTIONS ── */
-.section { max-width: 800px; margin: 0 auto; padding: 5rem 1.5rem; }
-
-.section-eyebrow {
-  font-family: var(--sans);
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-.section-title {
-  font-family: var(--serif-disp);
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  font-weight: 400;
-  color: var(--ink);
-  text-align: center;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.75rem;
-  line-height: 1.2;
-}
-
-.section-sub {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink3);
-  text-align: center;
-  line-height: 1.8;
-  max-width: 540px;
-  margin: 0 auto 3rem;
-}
-
-/* ── CONSULTA ── */
-#consultar {
-  border-top: 1px solid var(--parch3);
-  background: linear-gradient(180deg, rgba(232,120,74,0.03) 0%, transparent 60%);
-}
-
-.input-vessel {
-  border: 1px solid var(--parch3);
-  border-radius: 2px;
-  background: rgba(255,255,255,0.7);
-  overflow: hidden;
-  max-width: 640px;
-  margin: 0 auto;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.input-vessel:focus-within {
-  border-color: var(--gold2);
-  box-shadow: 0 0 0 4px rgba(196,154,82,0.08);
-}
-
-textarea {
-  width: 100%;
-  min-height: 120px;
-  padding: 1.5rem;
-  font-family: var(--serif);
-  font-size: 1.1rem;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.7;
-  color: var(--ink);
-  background: transparent;
-  border: none;
-  resize: none;
-  outline: none;
-}
-
-textarea::placeholder { color: var(--parch4); font-style: italic; }
-
-.input-base {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1.5rem;
-  border-top: 1px solid var(--parch3);
-  background: rgba(247,243,235,0.5);
-}
-
-.input-hint { font-size: 0.62rem; letter-spacing: 0.1em; color: var(--ink4); text-transform: uppercase; }
-
-.consult-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 20px;
-  background: var(--ink);
-  border: 1px solid var(--ink);
-  border-radius: 1px;
-  color: var(--parch);
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.25s;
-}
-
-.consult-btn:hover { background: var(--gold); border-color: var(--gold); }
-.consult-btn:disabled { background: var(--parch3); border-color: var(--parch3); color: var(--ink4); cursor: not-allowed; }
-
-/* ── LOADING ── */
-.loading { display: none; text-align: center; padding: 4rem 0; }
-
-.loading-text {
-  font-family: var(--serif);
-  font-size: 1.1rem;
-  font-style: italic;
-  color: var(--ink3);
-  margin-bottom: 1.5rem;
-}
-
-.dawn-loader {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 5px;
-  height: 20px;
-}
-
-.dawn-loader span {
-  width: 3px;
-  background: var(--gold2);
-  border-radius: 2px;
-  animation: grow 1.4s ease-in-out infinite;
-}
-
-.dawn-loader span:nth-child(1) { animation-delay: 0s; }
-.dawn-loader span:nth-child(2) { animation-delay: 0.15s; }
-.dawn-loader span:nth-child(3) { animation-delay: 0.3s; }
-.dawn-loader span:nth-child(4) { animation-delay: 0.45s; }
-.dawn-loader span:nth-child(5) { animation-delay: 0.6s; }
-
-@keyframes grow {
-  0%,100% { height: 4px; opacity: 0.3; }
-  50% { height: 18px; opacity: 1; }
-}
-
-/* ── RESPONSE ── */
-.response {
-  display: none;
-  max-width: 640px;
-  margin: 3rem auto 0;
-  animation: emerge 0.7s ease;
-}
-
-@keyframes emerge {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.response-query {
-  font-family: var(--serif);
-  font-size: 0.92rem;
-  font-style: italic;
-  color: var(--ink4);
-  padding: 0.75rem 1.25rem;
-  border-left: 2px solid var(--parch3);
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
-}
-
-.frase-sentido {
-  font-family: var(--serif);
-  font-size: clamp(1.2rem, 3vw, 1.6rem);
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.75;
-  color: var(--ink);
-  margin-bottom: 3rem;
-  padding: 2rem 2rem 1.75rem;
-  border-top: 2px solid var(--gold2);
-  border-bottom: 1px solid var(--parch3);
-  background: rgba(255,255,255,0.5);
-  position: relative;
-  text-align: center;
-}
-
-.frase-sentido::before {
-  content: '\201C';
-  font-family: var(--serif);
-  font-size: 5rem;
-  color: var(--gold-lt);
-  position: absolute;
-  top: -1rem;
-  left: 1.25rem;
-  line-height: 1;
-}
-
-.r-block { margin-bottom: 2rem; }
-
-.r-label {
-  font-family: var(--sans);
-  font-size: 0.6rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.r-label::after { content: ''; flex: 1; height: 1px; background: var(--parch3); }
-
-.r-text {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 300;
-  line-height: 1.85;
-  color: var(--ink2);
-}
-
-/* ── OPTIONS ── */
-.opts-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 10px;
-  margin-bottom: 2rem;
-}
-
-.opt-card {
-  border: 1px solid var(--parch3);
-  border-radius: 2px;
-  padding: 1.25rem;
-  background: rgba(255,255,255,0.5);
-  transition: border-color 0.2s;
-}
-
-.opt-card.best {
-  border-color: var(--gold2);
-  border-top: 2px solid var(--gold2);
-  background: rgba(255,255,255,0.8);
-}
-
-.opt-tag {
-  font-family: var(--sans);
-  font-size: 0.6rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink4);
-  margin-bottom: 8px;
-}
-
-.opt-card.best .opt-tag { color: var(--gold); }
-
-.opt-title {
-  font-family: var(--serif-disp);
-  font-size: 0.88rem;
-  font-weight: 400;
-  color: var(--ink);
-  margin-bottom: 8px;
-  line-height: 1.3;
-  letter-spacing: 0.04em;
-}
-
-.opt-desc {
-  font-family: var(--serif);
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: var(--ink3);
-  line-height: 1.6;
-  margin-bottom: 8px;
-}
-
-.opt-mim {
-  font-family: var(--serif);
-  font-size: 0.8rem;
-  font-style: italic;
-  color: var(--ink4);
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-
-.opt-card.best .opt-mim { color: var(--gold); }
-
-.ipe-track { height: 2px; background: var(--parch3); border-radius: 1px; margin-bottom: 4px; }
-.ipe-fill { height: 100%; background: var(--parch4); border-radius: 1px; }
-.opt-card.best .ipe-fill { background: var(--gold2); }
-.ipe-num { font-size: 0.6rem; color: var(--ink4); text-align: right; letter-spacing: 0.08em; }
-.opt-card.best .ipe-num { color: var(--gold); }
-
-.falsa-badge {
-  display: inline-block;
-  font-size: 0.55rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: rgba(122,58,32,0.08);
-  color: var(--terra);
-  padding: 2px 8px;
-  border-radius: 1px;
-  border: 1px solid rgba(122,58,32,0.2);
-  margin-bottom: 6px;
-}
-
-/* ── ALERT ── */
-.alert-block {
-  border: 1px solid rgba(122,58,32,0.2);
-  border-left: 3px solid var(--terra);
-  border-radius: 0 2px 2px 0;
-  padding: 1.25rem 1.5rem;
-  background: rgba(122,58,32,0.04);
-  margin-bottom: 2rem;
-}
-
-.alert-label {
-  font-family: var(--sans);
-  font-size: 0.6rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--terra);
-  margin-bottom: 0.6rem;
-}
-
-/* ── FOLLOW-UPS ── */
-.fq-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.5rem; }
-
-.fq-btn {
-  font-family: var(--serif);
-  font-size: 0.88rem;
-  font-style: italic;
-  padding: 6px 16px;
-  border: 1px solid var(--parch3);
-  border-radius: 1px;
-  background: transparent;
-  color: var(--ink3);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.fq-btn:hover { border-color: var(--gold2); color: var(--gold); background: rgba(196,154,82,0.05); }
-
-.new-query {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 2.5rem;
-  font-family: var(--sans);
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ink4);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.2s;
-}
-
-.new-query:hover { color: var(--gold); }
-
-/* ── SEPARATOR ── */
-.sep {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.sep::before, .sep::after { content: ''; flex: 1; height: 1px; background: var(--parch3); }
-.sep-icon { color: var(--gold2); font-size: 0.55rem; letter-spacing: 0.15em; }
-
-/* ── METODOLOGÍA ── */
-#metodologia { background: linear-gradient(180deg, transparent, rgba(232,120,74,0.03), transparent); }
-
-.distinction-block {
-  max-width: 580px;
-  margin: 0 auto 3.5rem;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.dist-side {
-  text-align: center;
-  padding: 1.5rem;
-  border: 1px solid var(--parch3);
-  border-radius: 2px;
-  background: rgba(255,255,255,0.4);
-}
-
-.dist-side.old { opacity: 0.4; }
-.dist-side.old .dist-word { text-decoration: line-through; text-decoration-color: var(--parch4); }
-
-.dist-word {
-  font-family: var(--serif-disp);
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-
-.dist-desc {
-  font-family: var(--serif);
-  font-size: 0.85rem;
-  font-style: italic;
-  color: var(--ink3);
-  line-height: 1.6;
-}
-
-.dist-arrow { color: var(--gold2); font-size: 1.4rem; font-family: var(--serif); }
-
-.axiom-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1px;
-  background: var(--parch3);
-  border: 1px solid var(--parch3);
-  border-radius: 2px;
-  overflow: hidden;
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.axiom-item {
-  padding: 1.5rem;
-  background: var(--parch);
-  transition: background 0.2s;
-}
-
-.axiom-item:hover { background: rgba(255,255,255,0.8); }
-
-.axiom-num {
-  font-family: var(--serif-disp);
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--parch4);
-  line-height: 1;
-  margin-bottom: 8px;
-}
-
-.axiom-title {
-  font-family: var(--sans);
-  font-size: 0.6rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 8px;
-}
-
-.axiom-desc {
-  font-family: var(--serif);
-  font-size: 0.9rem;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink3);
-  line-height: 1.65;
-}
-
-/* Versículo */
-.versicle {
-  max-width: 580px;
-  margin: 4rem auto 0;
-  text-align: center;
-  padding: 2.5rem;
-  border-top: 1px solid var(--parch3);
-  border-bottom: 1px solid var(--parch3);
-  position: relative;
-}
-
-.versicle::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 2px;
-  background: var(--gold2);
-}
-
-.versicle p {
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink2);
-  line-height: 1.8;
-  margin-bottom: 0.75rem;
-}
-
-.versicle cite {
-  font-family: var(--sans);
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-style: normal;
-}
-
-/* ── PLANES ── */
-.planes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 1px;
-  background: var(--parch3);
-  border: 1px solid var(--parch3);
-  border-radius: 2px;
-  overflow: hidden;
-  max-width: 680px;
-  margin: 0 auto;
-}
-
-.plan-card {
-  padding: 2rem 1.5rem;
-  background: var(--parch);
-}
-
-.plan-card.featured {
-  background: #FDFAF3;
-  border-top: 2px solid var(--gold2);
-  margin-top: -1px;
-}
-
-.plan-badge {
-  font-family: var(--sans);
-  font-size: 0.58rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.75rem;
-  display: block;
-}
-
-.plan-name {
-  font-family: var(--serif-disp);
-  font-size: 1.1rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-}
-
-.plan-price {
-  font-family: var(--serif);
-  font-size: 2rem;
-  font-weight: 300;
-  color: var(--ink);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.plan-price sub { font-size: 0.85rem; color: var(--ink4); }
-
-.plan-desc {
-  font-family: var(--serif);
-  font-size: 0.85rem;
-  font-style: italic;
-  color: var(--ink3);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--parch3);
-}
-
-.plan-features { list-style: none; margin-bottom: 1.5rem; }
-
-.plan-features li {
-  font-size: 0.8rem;
-  color: var(--ink3);
-  padding: 5px 0;
-  border-bottom: 1px solid var(--parch3);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.plan-features li::before { content: '·'; color: var(--gold2); font-size: 1.2rem; }
-
-.plan-btn {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--parch3);
-  border-radius: 1px;
-  background: transparent;
-  color: var(--ink2);
-  font-family: var(--sans);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.25s;
-}
-
-.plan-card.featured .plan-btn {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--parch);
-}
-
-.plan-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--parch); }
-
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--parch3);
-  padding: 3.5rem 2rem;
-  text-align: center;
-  background: var(--parch2);
-}
-
-.footer-star { display: block; margin: 0 auto 1.25rem; opacity: 0.35; }
-
-.footer-logo {
-  font-family: var(--serif-disp);
-  font-size: 0.95rem;
-  font-weight: 400;
-  letter-spacing: 0.35em;
-  color: var(--ink3);
-  margin-bottom: 0.75rem;
-}
-
-.footer-text {
-  font-family: var(--serif);
-  font-size: 0.88rem;
-  font-style: italic;
-  color: var(--ink4);
-  line-height: 1.9;
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 600px) {
-  .opts-grid { grid-template-columns: 1fr; }
-  .distinction-block { grid-template-columns: 1fr; }
-  .dist-arrow { display: none; }
-  nav { padding: 1rem; }
-  .nav-links { gap: 1rem; }
-  .planes-grid { grid-template-columns: 1fr; }
-  .hero { padding: 3rem 1.5rem 5rem; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orientum</title>
+  <style>
+    *, *\:\:before, *\:\:after { box-sizing\: border-box; margin\: 0; padding\: 0; }
+
+    body {
+      font-family\: 'Georgia', serif;
+      background\: #f0ede8;
+      min-height\: 100vh;
+      display\: flex;
+      justify-content\: center;
+      align-items\: center;
+      padding\: 16px;
+    }.contenedor {
+      background\: #fff;
+      border-radius\: 10px;
+      box-shadow\: 0 4px 24px rgba(0,0,0,0.08);
+      width\: 100%;
+      max-width\: 740px;
+      height\: 88vh;
+      display\: flex;
+      flex-direction\: column;
+      overflow\: hidden;
+    }.cabecera {
+      padding\: 18px 24px;
+      border-bottom\: 1px solid #e8e4df;
+      display\: flex;
+      align-items\: baseline;
+      gap\: 10px;
+    }.cabecera h1 {
+      font-size\: 1.15rem;
+      color\: #1a1a1a;
+      font-weight\: bold;
+      letter-spacing\: 0.02em;
+    }.cabecera span {
+      font-size\: 0.8rem;
+      color\: #999;
+      font-style\: italic;
+    }.chat {
+      flex\: 1;
+      overflow-y\: auto;
+      padding\: 20px 24px;
+      display\: flex;
+      flex-direction\: column;
+      gap\: 14px;
+      scroll-behavior\: smooth;
+    }.burbuja {
+      max-width\: 82%;
+      padding\: 12px 16px;
+      border-radius\: 8px;
+      line-height\: 1.65;
+      font-size\: 0.92rem;
+      white-space\: pre-wrap;
+      word-break\: break-word;
+    }.burbuja.usuario {
+      background\: #1a1a1a;
+      color\: #f5f3ef;
+      align-self\: flex-end;
+      border-bottom-right-radius\: 2px;
+    }.burbuja.asistente {
+      background\: #f0ede8;
+      color\: #1a1a1a;
+      align-self\: flex-start;
+      border-bottom-left-radius\: 2px;
+    }.burbuja.escribiendo {
+      color\: #aaa;
+      font-style\: italic;
+      background\: #f7f5f2;
+    }.entrada {
+      padding\: 14px 20px;
+      border-top\: 1px solid #e8e4df;
+      display\: flex;
+      gap\: 10px;
+      align-items\: flex-end;
+    }
+
+    textarea {
+      flex\: 1;
+      border\: 1px solid #d5d2cc;
+      border-radius\: 6px;
+      padding\: 10px 13px;
+      font-size\: 0.92rem;
+      font-family\: 'Georgia', serif;
+      resize\: none;
+      min-height\: 48px;
+      max-height\: 120px;
+      outline\: none;
+      line-height\: 1.5;
+      transition\: border-color 0.2s;
+      overflow-y\: auto;
+    }
+
+    textarea\:focus { border-color\: #1a1a1a; }
+
+    button {
+      background\: #1a1a1a;
+      color\: #fff;
+      border\: none;
+      border-radius\: 6px;
+      padding\: 11px 20px;
+      font-size\: 0.9rem;
+      font-family\: 'Georgia', serif;
+      cursor\: pointer;
+      white-space\: nowrap;
+      transition\: background 0.2s;
+      height\: 48px;
+    }
+
+    button\:hover\:not(\:disabled) { background\: #333; }
+    button\:disabled { background\: #bbb; cursor\: not-allowed; }.chat\:\:-webkit-scrollbar { width\: 4px; }.chat\:\:-webkit-scrollbar-thumb { background\: #d5d2cc; border-radius\: 4px; }
+  </style>
 </head>
 <body>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero">
-  <div class="hero-dawn"></div>
-
-  <!-- Rayos de luz — vitrales -->
-  <svg class="hero-rays" viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-    <g opacity="1">
-      <line x1="500" y1="600" x2="100" y2="0" stroke="#C49A52" stroke-width="60"/>
-      <line x1="500" y1="600" x2="250" y2="0" stroke="#E8C97A" stroke-width="40"/>
-      <line x1="500" y1="600" x2="400" y2="0" stroke="#C49A52" stroke-width="80"/>
-      <line x1="500" y1="600" x2="500" y2="0" stroke="#E8C97A" stroke-width="50"/>
-      <line x1="500" y1="600" x2="620" y2="0" stroke="#C49A52" stroke-width="70"/>
-      <line x1="500" y1="600" x2="760" y2="0" stroke="#E8C97A" stroke-width="45"/>
-      <line x1="500" y1="600" x2="900" y2="0" stroke="#C49A52" stroke-width="55"/>
-    </g>
-  </svg>
-
-  <div class="hero-content">
-    <!-- Estrella de 8 puntas -->
-    <svg class="star-symbol" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="36" cy="36" r="34" stroke="#C49A52" stroke-width="0.6" opacity="0.4"/>
-      <path d="M36 4 L39.5 32.5 L68 36 L39.5 39.5 L36 68 L32.5 39.5 L4 36 L32.5 32.5 Z" stroke="#A67C3E" stroke-width="1" fill="none"/>
-      <path d="M36 14 L38.5 33.5 L58 36 L38.5 38.5 L36 58 L33.5 38.5 L14 36 L33.5 33.5 Z" stroke="#C49A52" stroke-width="0.7" fill="none" opacity="0.6"/>
-      <circle cx="36" cy="36" r="2.5" fill="#A67C3E" opacity="0.7"/>
-    </svg>
-
-    <p class="hero-eyebrow">El hombre al encuentro del sentido</p>
-    <h1 class="hero-title">ORIEN<span>TUM</span></h1>
-    <p class="hero-tagline">Donde el sentido se vuelve orientación</p>
-
-    <div class="distinction">
-      <p>El oráculo antiguo <strong>predecía</strong> el destino y encadenaba al hombre.<br>
-      Orientum busca otra cosa: el <strong>sentido</strong>.<br>
-      Porque solo quien comprende puede verdaderamente elegir.</p>
-      <span class="no-predict">No predecimos · Orientamos</span>
-    </div>
-
-    <p class="verbo-quote">
-      <span>✦</span>
-      En el principio era el Verbo — Juan 1:1
-      <span>✦</span>
-    </p>
-
-    <p class="pragmatica">La orientación es nuestra.<br>La decisión, irreductiblemente tuya.</p>
-
-    <a href="#consultar" class="hero-cta">
-      <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Buscar orientación
-    </a>
+<div class="contenedor">
+  <div class="cabecera">
+    <h1>Orientum</h1>
+    <span>consulta libre</span>
   </div>
 
-  <div class="scroll-hint">
-    <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><rect x="1" y="1" width="12" height="20" rx="6" stroke="currentColor" stroke-width="1"/><circle cx="7" cy="6" r="1.5" fill="currentColor" opacity="0.5"/></svg>
-    <span>Descender</span>
-  </div>
-</section>
+  <div class="chat" id="chat"></div>
 
-<!-- ═══ NAV ═══ -->
-<nav>
-  <div class="nav-logo">ORIENTUM</div>
-  <div class="nav-links">
-    <a href="#consultar">Consultar</a>
-    <a href="#metodologia">Metodología</a>
-    <a href="#planes">Planes</a>
-  </div>
-</nav>
-
-<!-- ═══ CONSULTA ═══ -->
-<div class="section" id="consultar">
-  <p class="section-eyebrow">La orientación</p>
-  <h2 class="section-title">La Consulta</h2>
-  <p class="section-sub">Toda situación es lenguaje. Describí lo que estás viviendo — un conflicto, una decisión, un dilema — y el sistema leerá su sentido profundo y te orientará hacia la paz estructural real.</p>
-
-  <div class="input-vessel">
-    <textarea id="inp" placeholder="Describí tu situación con libertad…" rows="4"></textarea>
-    <div class="input-base">
-      <span class="input-hint">Enter para consultar</span>
-      <button class="consult-btn" id="btn" onclick="analyze()">
-        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5h8M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Orientar
-      </button>
-    </div>
-  </div>
-
-  <div class="loading" id="loading">
-    <p class="loading-text">Leyendo el lenguaje de la situación…</p>
-    <div class="dawn-loader">
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
-  </div>
-
-  <div class="response" id="response"></div>
-</div>
-
-<div class="sep"><span class="sep-icon">✦ ✦ ✦</span></div>
-
-<!-- ═══ METODOLOGÍA ═══ -->
-<div class="section" id="metodologia">
-  <p class="section-eyebrow">El método</p>
-  <h2 class="section-title">La Metodología</h2>
-  <p class="section-sub">Orientum no predice ni optimiza. Opera desde un marco filosófico que integra la búsqueda griega del sentido con la revelación cristiana del Logos encarnado.</p>
-
-  <div class="distinction-block">
-    <div class="dist-side old">
-      <div class="dist-word">Predecir</div>
-      <div class="dist-desc">El oráculo revelaba el destino. El hombre quedaba encadenado. La libertad, abolida.</div>
-    </div>
-    <div class="dist-arrow">→</div>
-    <div class="dist-side">
-      <div class="dist-word">Orientar</div>
-      <div class="dist-desc">El Logos revela el sentido. El hombre puede elegir. La libertad, restaurada.</div>
-    </div>
-  </div>
-
-  <div class="axiom-grid">
-    <div class="axiom-item">
-      <div class="axiom-num">I</div>
-      <div class="axiom-title">Ontológico</div>
-      <div class="axiom-desc">La realidad es lenguaje de Dios, interferido por hombres libres. Todo fenómeno dice algo.</div>
-    </div>
-    <div class="axiom-item">
-      <div class="axiom-num">II</div>
-      <div class="axiom-title">Epistemológico</div>
-      <div class="axiom-desc">Razón, emoción y Fe son las tres columnas del conocimiento. Ninguna alcanza sola.</div>
-    </div>
-    <div class="axiom-item">
-      <div class="axiom-num">III</div>
-      <div class="axiom-title">Mimético</div>
-      <div class="axiom-desc">El hombre imita el deseo del otro. Sin orientación, escala hacia la rivalidad y la violencia.</div>
-    </div>
-    <div class="axiom-item">
-      <div class="axiom-num">IV</div>
-      <div class="axiom-title">Cristológico</div>
-      <div class="axiom-desc">Cristo desenmascaró el chivo expiatorio y abrió el único camino de paz real: desear el deseo de Dios.</div>
-    </div>
-    <div class="axiom-item">
-      <div class="axiom-num">V</div>
-      <div class="axiom-title">Ético</div>
-      <div class="axiom-desc">La verdad es lo que genera paz estructural real. No ganar. No tener razón. No optimizar.</div>
-    </div>
-    <div class="axiom-item">
-      <div class="axiom-num">Δ</div>
-      <div class="axiom-title">IPE</div>
-      <div class="axiom-desc">Índice de Paz Estructural. Cada opción se evalúa por su capacidad de ordenar, pacificar y sostener sin imponer.</div>
-    </div>
-  </div>
-
-  <div class="versicle">
-    <p>"En el principio era el Verbo, y el Verbo era con Dios,<br>y el Verbo era Dios."</p>
-    <cite>Juan 1:1</cite>
+  <div class="entrada">
+    <textarea
+      id="input"
+      placeholder="Escribí tu consulta..."
+      rows="1"
+      onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); enviar(); }"
+      oninput="this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,120)+'px';"
+    ></textarea>
+    <button id="btn" onclick="enviar()">Enviar</button>
   </div>
 </div>
-
-<div class="sep"><span class="sep-icon">✦ ✦ ✦</span></div>
-
-<!-- ═══ PLANES ═══ -->
-<div class="section" id="planes">
-  <p class="section-eyebrow">Acceso</p>
-  <h2 class="section-title">Los Planes</h2>
-  <p class="section-sub">Tres niveles según la profundidad de orientación que cada persona o institución necesita.</p>
-
-  <div class="planes-grid">
-    <div class="plan-card">
-      <span class="plan-badge">Iniciación</span>
-      <div class="plan-name">Explorador</div>
-      <div class="plan-price">Gratis</div>
-      <div class="plan-desc">Para conocer el sistema y su metodología.</div>
-      <ul class="plan-features">
-        <li>5 consultas por mes</li>
-        <li>Análisis mimético básico</li>
-        <li>3 opciones con IPE</li>
-      </ul>
-      <button class="plan-btn">Comenzar</button>
-    </div>
-    <div class="plan-card featured">
-      <span class="plan-badge">✦ Recomendado</span>
-      <div class="plan-name">Peregrino</div>
-      <div class="plan-price">$12 <sub>/mes</sub></div>
-      <div class="plan-desc">Para quien busca orientación continua en su vida.</div>
-      <ul class="plan-features">
-        <li>Consultas ilimitadas</li>
-        <li>Análisis completo + IPE</li>
-        <li>Historial de consultas</li>
-        <li>Preguntas de seguimiento</li>
-      </ul>
-      <button class="plan-btn">Suscribirse</button>
-    </div>
-    <div class="plan-card">
-      <span class="plan-badge">Institucional</span>
-      <div class="plan-name">Institución</div>
-      <div class="plan-price">$49 <sub>/mes</sub></div>
-      <div class="plan-desc">Para mediadores, consultores y equipos.</div>
-      <ul class="plan-features">
-        <li>Usuarios ilimitados</li>
-        <li>API access</li>
-        <li>Casos compartidos</li>
-        <li>Soporte prioritario</li>
-      </ul>
-      <button class="plan-btn">Contactar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  <svg class="footer-star" width="28" height="28" viewBox="0 0 72 72" fill="none">
-    <path d="M36 4 L39.5 32.5 L68 36 L39.5 39.5 L36 68 L32.5 39.5 L4 36 L32.5 32.5 Z" stroke="#A67C3E" stroke-width="1.2" fill="none"/>
-  </svg>
-  <div class="footer-logo">ORIENTUM</div>
-  <p class="footer-text">
-    Basado en <em>El hombre al encuentro del sentido</em><br>
-    La realidad es lenguaje. Toda decisión se evalúa por su capacidad de generar paz estructural.<br><br>
-    <em>"La verdad os hará libres." — Juan 8:32</em>
-  </p>
-</footer>
 
 <script>
-document.getElementById('inp').addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); analyze(); }
-});
+  const chat = document.getElementById("chat");
+  const input = document.getElementById("input");
+  const btn = document.getElementById("btn");
 
-async function analyze() {
-  const inp = document.getElementById('inp').value.trim();
-  if (!inp) return;
-  const btn = document.getElementById('btn');
-  const loading = document.getElementById('loading');
-  const resp = document.getElementById('response');
-  btn.disabled = true;
-  loading.style.display = 'block';
-  resp.style.display = 'none';
-  resp.innerHTML = '';
-  try {
-    const res = await fetch('/.netlify/functions/oracle', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ situation: inp })
-    });
-    const d = await res.json();
-    render(d, inp);
-  } catch(e) {
-    resp.innerHTML = `<p style="color:var(--terra);font-family:'Cormorant Garamond',serif;font-style:italic;text-align:center;padding:2rem;">El sistema no pudo responder. Intentá de nuevo.</p>`;
-    resp.style.display = 'block';
-  } finally {
-    btn.disabled = false;
-    loading.style.display = 'none';
+  function agregar(texto, clase) {
+    const div = document.createElement("div");
+    div.className = "burbuja " + clase;
+    div.textContent = texto;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
   }
-}
 
-function render(d, orig) {
-  const resp = document.getElementById('response');
-  const opts = d.opciones.map((op, i) => {
-    const best = i === d.opcionRecomendada;
-    return `<div class="opt-card ${best?'best':''}">
-      ${op.esFalsaPaz?`<span class="falsa-badge">Falsa paz</span><br>`:''}
-      <div class="opt-tag">${best?'✦ Recomendada':'Opción '+String.fromCharCode(65+i)}</div>
-      <div class="opt-title">${op.titulo}</div>
-      <div class="opt-desc">${op.descripcion}</div>
-      <div class="opt-mim">${op.orientacionMimetica}</div>
-      ${op.esFalsaPaz&&op.razonFalsaPaz?`<div style="font-size:0.75rem;color:var(--terra);margin-bottom:10px;">${op.razonFalsaPaz}</div>`:''}
-      <div class="ipe-track"><div class="ipe-fill" style="width:${op.ipe}%"></div></div>
-      <div class="ipe-num">IPE ${op.ipe}/100</div>
-    </div>`;
-  }).join('');
+  async function enviar() {
+    const texto = input.value.trim();
+    if (!texto) return;
 
-  const fqs = (d.preguntasSeguimiento||[]).map(q =>
-    `<button class="fq-btn" onclick="followUp('${q.replace(/'/g,"\\'")}')">${q}</button>`
-  ).join('');
+    input.value = "";
+    input.style.height = "auto";
+    btn.disabled = true;
 
-  resp.innerHTML = `
-    <div class="response-query">"${orig}"</div>
-    <div class="frase-sentido">${d.fraseSentido}</div>
-    <div class="r-block"><div class="r-label">Lectura del fenómeno</div><div class="r-text">${d.lecturaFenomeno}</div></div>
-    <div class="r-block"><div class="r-label">Dinámica mimética</div><div class="r-text">${d.dinamicaMimetica}</div></div>
-    <div class="r-block"><div class="r-label">Diagnóstico</div><div class="r-text">${d.diagnostico}</div></div>
-    <div class="r-block"><div class="r-label">Opciones</div><div class="opts-grid">${opts}</div></div>
-    <div class="r-block"><div class="r-label">Orientación</div><div class="r-text">${d.orientacionFinal}</div></div>
-    <div class="alert-block"><div class="alert-label">Falsa paz — evitar</div><div class="r-text" style="color:var(--ink2);">${d.falsasPaces}</div></div>
-    <div class="r-block"><div class="r-label">Profundizar</div><div class="fq-list">${fqs}</div></div>
-    <button class="new-query" onclick="reset()">
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 5a4 4 0 104-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M5 1L3 3l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Nueva consulta
-    </button>`;
-  resp.style.display = 'block';
-  resp.scrollIntoView({ behavior:'smooth', block:'start' });
-}
+    agregar(texto, "usuario");
+    const espera = agregar("escribiendo...", "asistente escribiendo");
 
-function followUp(q) {
-  document.getElementById('inp').value = q;
-  document.getElementById('response').style.display = 'none';
-  analyze();
-}
+    try {
+      const res = await fetch("/.netlify/functions/oracle", {
+        method\: "POST",
+        headers\: { "Content-Type"\: "application/json" },
+        body\: JSON.stringify({ mensaje\: texto })
+      });
 
-function reset() {
-  document.getElementById('inp').value = '';
-  document.getElementById('response').style.display = 'none';
-  document.getElementById('inp').focus();
-  document.getElementById('inp').scrollIntoView({ behavior:'smooth' });
-}
+      const data = await res.json();
+      espera.remove();
+
+      if (data.respuesta) {
+        agregar(data.respuesta, "asistente");
+      } else {
+        agregar("No se pudo obtener respuesta.", "asistente");
+      }
+
+    } catch (err) {
+      espera.remove();
+      agregar("Error de conexión. Intentá nuevamente.", "asistente");
+    }
+
+    btn.disabled = false;
+    input.focus();
+  }
 </script>
+
 </body>
 </html>
