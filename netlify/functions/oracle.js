@@ -1,25 +1,25 @@
 const https = require("https");
 
-const SYSTEM_PROMPT = `Eres Orientum, un asistente que opera bajo una ontología estructural precisa que integra la teoría mimética de René Girard y el sistema de redes tripartitas de Carlos Castrillo. Toda relación significativa es triangular\: ORIGEN → MEDIADOR → DESTINO. Sin mediador la relación colapsa en díada y el conflicto se vuelve simétrico. Identificá siempre el mediador. Orientá sin decidir. La pragmática pertenece al consultante.`;
+const SYSTEM_PROMPT = `Eres Orientum, un asistente que opera bajo una ontología estructural precisa que integra la teoría mimética de René Girard y el sistema de redes tripartitas de Carlos Castrillo. Toda relación significativa es triangular: ORIGEN → MEDIADOR → DESTINO. Sin mediador la relación colapsa en díada y el conflicto se vuelve simétrico. Identificá siempre el mediador. Orientá sin decidir. La pragmática pertenece al consultante.`;
 
 function llamarAnthropic(userMessage, apiKey) {
   return new Promise((resolve, reject) => {
     const bodyObj = {
-      model\: "claude-3-5-sonnet-20241022",
-      max_tokens\: 1024,
-      system\: SYSTEM_PROMPT,
-      messages\: [{ role\: "user", content\: userMessage }]
+      model: "claude-3-5-sonnet-20241022",
+      max_tokens: 1024,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: "user", content: userMessage }]
     };
     const body = JSON.stringify(bodyObj);
     const options = {
-      hostname\: "api.anthropic.com",
-      path\: "/v1/messages",
-      method\: "POST",
-      headers\: {
-        "Content-Type"\: "application/json",
-        "x-api-key"\: apiKey,
-        "anthropic-version"\: "2023-06-01",
-        "Content-Length"\: Buffer.byteLength(body)
+      hostname: "api.anthropic.com",
+      path: "/v1/messages",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "Content-Length": Buffer.byteLength(body)
       }
     };
     const req = https.request(options, (res) => {
@@ -35,22 +35,22 @@ function llamarAnthropic(userMessage, apiKey) {
 
 exports.handler = async (event) => {
   const headers = {
-    "Access-Control-Allow-Origin"\: "*",
-    "Access-Control-Allow-Headers"\: "Content-Type",
-    "Access-Control-Allow-Methods"\: "POST, OPTIONS",
-    "Content-Type"\: "application/json"
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Content-Type": "application/json"
   };
 
   if (event.httpMethod === "OPTIONS") {
-    return { statusCode\: 200, headers, body\: "" };
+    return { statusCode: 200, headers, body: "" };
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return {
-      statusCode\: 200,
+      statusCode: 200,
       headers,
-      body\: JSON.stringify({ respuesta\: "ERROR\: falta la API key en Netlify." })
+      body: JSON.stringify({ respuesta: "ERROR: falta la API key en Netlify." })
     };
   }
 
@@ -73,40 +73,40 @@ exports.handler = async (event) => {
       parsed = JSON.parse(raw);
     } catch (e) {
       return {
-        statusCode\: 200,
+        statusCode: 200,
         headers,
-        body\: JSON.stringify({ respuesta\: "ERROR PARSE\: " + raw.substring(0, 300) })
+        body: JSON.stringify({ respuesta: "ERROR PARSE: " + raw.substring(0, 300) })
       };
     }
 
     if (parsed.error) {
       return {
-        statusCode\: 200,
+        statusCode: 200,
         headers,
-        body\: JSON.stringify({ respuesta\: "ERROR API\: " + parsed.error.type + " — " + parsed.error.message })
+        body: JSON.stringify({ respuesta: "ERROR API: " + parsed.error.type + " — " + parsed.error.message })
       };
     }
 
     const texto = parsed.content && parsed.content&& parsed.content.text;
     if (!texto) {
       return {
-        statusCode\: 200,
+        statusCode: 200,
         headers,
-        body\: JSON.stringify({ respuesta\: "ERROR\: respuesta vacía. Raw\: " + raw.substring(0, 300) })
+        body: JSON.stringify({ respuesta: "ERROR: respuesta vacía. Raw: " + raw.substring(0, 300) })
       };
     }
 
     return {
-      statusCode\: 200,
+      statusCode: 200,
       headers,
-      body\: JSON.stringify({ respuesta\: texto })
+      body: JSON.stringify({ respuesta: texto })
     };
 
   } catch (err) {
     return {
-      statusCode\: 200,
+      statusCode: 200,
       headers,
-      body\: JSON.stringify({ respuesta\: "ERROR CATCH\: " + err.message })
+      body: JSON.stringify({ respuesta: "ERROR CATCH: " + err.message })
     };
   }
 };
