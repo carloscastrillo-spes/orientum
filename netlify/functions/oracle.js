@@ -201,9 +201,9 @@ exports.handler = async (event) => {
 
   } catch (error) {
     return {
-      statusCode: 500,
+      statusCode\: 200,
       headers,
-      body: JSON.stringify({ error: "Error interno: " + error.message })
+      body\: JSON.stringify({ respuesta\: "ERROR CATCH\: " + error.message })
     };
   }
 };
