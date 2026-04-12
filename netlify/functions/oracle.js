@@ -180,11 +180,11 @@ exports.handler = async (event) => {
   try {
     const resultado = await llamarAnthropic(userPrompt, apiKey);
 
-    if (resultado.error) {
+  if (resultado.error) {
       return {
-        statusCode: 500,
+        statusCode\: 200,
         headers,
-        body: JSON.stringify({ error: resultado.error.message || "Error de Anthropic." })
+        body\: JSON.stringify({ respuesta\: "ERROR ANTHROPIC\: " + JSON.stringify(resultado.error) })
       };
     }
 
