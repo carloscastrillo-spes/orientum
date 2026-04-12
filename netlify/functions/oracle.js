@@ -87,7 +87,10 @@ exports.handler = async (event) => {
       };
     }
 
-    const texto = parsed.content && parsed.content&& parsed.content.text;
+    let texto = '';
+for (let i = 0; i < r.content.length; i++) {
+  if (r.content[i].text) { texto += r.content[i].text; }
+}
     if (!texto) {
       return {
         statusCode: 200,
