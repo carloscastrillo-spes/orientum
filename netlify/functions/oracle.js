@@ -1,11 +1,11 @@
 exports.handler = function(event, context, callback) {
   var headers = {
-    'Access-Control-Allow-Origin'\: '*',
-    'Content-Type'\: 'application/json'
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
   };
 
   if (event.httpMethod === 'OPTIONS') {
-    return callback(null, { statusCode\: 200, headers\: headers, body\: '' });
+    return callback(null, { statusCode: 200, headers: headers, body: '' });
   }
 
   var msg = 'hola';
@@ -17,11 +17,11 @@ exports.handler = function(event, context, callback) {
   } catch(e) {}
 
   var turno = historial.length / 2 + 1;
-  var respuesta = '[MOCK — turno ' + turno + '] Recibí\: "' + msg + '". El historial tiene ' + historial.length + ' mensajes previos. Todo funciona correctamente.';
+  var respuesta = '[MOCK — turno ' + turno + '] Recibí: "' + msg + '". El historial tiene ' + historial.length + ' mensajes previos. Todo funciona correctamente.';
 
   callback(null, {
-    statusCode\: 200,
-    headers\: headers,
-    body\: JSON.stringify({ respuesta\: respuesta })
+    statusCode: 200,
+    headers: headers,
+    body: JSON.stringify({ respuesta: respuesta })
   });
 };
