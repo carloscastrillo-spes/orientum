@@ -16,8 +16,8 @@ exports.handler = function(event, context, callback) {
     if (b && b.historial) { historial = b.historial; }
   } catch(e) {}
 
-  var turno = historial.length / 2 + 1;
-  var respuesta = '[MOCK — turno ' + turno + '] Recibí: "' + msg + '". El historial tiene ' + historial.length + ' mensajes previos. Todo funciona correctamente.';
+  var turno = Math.floor(historial.length / 2) + 1;
+  var respuesta = '[MOCK turno ' + turno + '] Recibi: "' + msg + '". Historial: ' + historial.length + ' mensajes. Todo funciona.';
 
   callback(null, {
     statusCode: 200,
